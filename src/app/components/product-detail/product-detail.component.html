@@ -1,0 +1,243 @@
+<!-- Page Header Banner -->
+<header class="page-header-banner">
+  <div class="container">
+    <h1>Product Details</h1>
+    <div class="breadcrumbs">
+      <a routerLink="/home">Home</a> . <span>Pages</span> . <span class="active">Product Details</span>
+    </div>
+  </div>
+</header>
+
+<!-- Loader State -->
+<div *ngIf="loading" class="container section-padding text-center">
+  <div class="spinner-container">
+    <div class="shimmer-block" style="height: 400px; width: 100%;"></div>
+  </div>
+</div>
+
+<!-- Main Product Details Container -->
+<div *ngIf="!loading && product" class="product-details-container section-padding">
+  <div class="container">
+    
+    <!-- Detail Main Box -->
+    <div class="detail-main-box">
+      
+      <!-- Left Images Gallery Grid -->
+      <div class="gallery-wrapper">
+        <!-- Thumbnail column -->
+        <div class="thumbnails-col">
+          <div 
+            *ngFor="let thumb of product.thumbnails" 
+            class="thumb-box"
+            [class.active]="selectedImage === thumb"
+            (click)="selectImage(thumb)"
+          >
+            <img [src]="thumb" alt="Product Thumbnail" />
+          </div>
+        </div>
+        
+        <!-- Main preview box -->
+        <div class="main-preview-box">
+          <img [src]="selectedImage" [alt]="product.name" />
+        </div>
+      </div>
+
+      <!-- Right Details Info Box -->
+      <div class="details-info-box">
+        <h2 class="detail-product-name">{{ product.name }}</h2>
+        
+        <!-- Ratings -->
+        <div class="detail-ratings-row">
+          <div class="stars">
+            <i *ngFor="let star of [1,2,3,4,5]" 
+               class="fa-solid fa-star" 
+               [class.active]="star <= product.rating"
+            ></i>
+          </div>
+          <span class="reviews-count">(4)</span>
+        </div>
+
+        <!-- Pricing -->
+        <div class="detail-price-row">
+          <span class="current-price">${{ product.price | number:'1.2-2' }}</span>
+          <span class="original-price" *ngIf="product.originalPrice">${{ product.originalPrice | number:'1.2-2' }}</span>
+        </div>
+
+        <!-- Short Description -->
+        <p class="detail-description">
+          {{ product.description }}
+        </p>
+
+        <!-- Actions -->
+        <div class="detail-actions-row">
+          <button class="btn btn-primary add-cart-btn" (click)="addToCart()">Add To Cart</button>
+          <button class="wishlist-icon-btn" (click)="addToWishlist()" title="Add to Wishlist">
+            <i class="fa-regular fa-heart"></i>
+          </button>
+        </div>
+
+        <!-- Metadata -->
+        <div class="detail-metadata">
+          <p><strong>Categories:</strong> {{ product.category }}</p>
+          <p><strong>Brand:</strong> {{ product.brand }}</p>
+          <p><strong>Code:</strong> {{ product.code }}</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Product Info Tabs Block -->
+    <div class="info-tabs-wrapper">
+      
+      <!-- Tab Nav Links -->
+      <div class="tabs-nav-bar">
+        <button 
+          [class.active]="activeTab === 'description'"
+          (click)="changeTab('description')"
+        >Description</button>
+        <button 
+          [class.active]="activeTab === 'additionalInfo'"
+          (click)="changeTab('additionalInfo')"
+        >Additional Info</button>
+        <button 
+          [class.active]="activeTab === 'reviews'"
+          (click)="changeTab('reviews')"
+        >Reviews</button>
+        <button 
+          [class.active]="activeTab === 'video'"
+          (click)="changeTab('video')"
+        >Video</button>
+      </div>
+
+      <!-- Tab Content Area -->
+      <div class="tabs-content-pane">
+        
+        <!-- Description Tab -->
+        <div *ngIf="activeTab === 'description'" class="tab-pane">
+          <h3>Varius tempor.</h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac quam dolor. In dignissim lectus sed nisl tempor, ac porttitor libero consectetur. Pellentesque diam dolor, tincidunt nec ante congue, tincidunt facilisis tortor. Mauris vitae massa molestie, sagittis ligula vel, egestas massa. Phasellus quis sodales augue. Donec nec ultricies diam.
+          </p>
+          
+          <h3 class="margin-top">More details</h3>
+          <ul class="details-bullet-list">
+            <li><i class="fa-solid fa-arrow-right"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac quam dolor.</li>
+            <li><i class="fa-solid fa-arrow-right"></i> Cras ac quam dolor. In dignissim lectus sed nisl tempor, ac porttitor libero consectetur.</li>
+            <li><i class="fa-solid fa-arrow-right"></i> Pellentesque diam dolor, tincidunt nec ante congue, tincidunt facilisis tortor.</li>
+            <li><i class="fa-solid fa-arrow-right"></i> Mauris vitae massa molestie, sagittis ligula vel, egestas massa. Phasellus quis sodales augue.</li>
+            <li><i class="fa-solid fa-arrow-right"></i> Phasellus quis sodales augue. Integer feugiat odio ut dictum viverra.</li>
+          </ul>
+        </div>
+
+        <!-- Additional Info Tab -->
+        <div *ngIf="activeTab === 'additionalInfo'" class="tab-pane">
+          <h3>Technical Specifications</h3>
+          <table class="specs-table">
+            <tr>
+              <td><strong>Model Code</strong></td>
+              <td>{{ product.code }}</td>
+            </tr>
+            <tr>
+              <td><strong>Brand</strong></td>
+              <td>{{ product.brand }}</td>
+            </tr>
+            <tr>
+              <td><strong>Category</strong></td>
+              <td>{{ product.category }}</td>
+            </tr>
+            <tr>
+              <td><strong>Warranty</strong></td>
+              <td>1 Year Limited Manufacturer Warranty</td>
+            </tr>
+            <tr>
+              <td><strong>Availability</strong></td>
+              <td>In Stock (Ready to Ship)</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Reviews Tab -->
+        <div *ngIf="activeTab === 'reviews'" class="tab-pane">
+          <h3>Customer Reviews</h3>
+          <div class="reviews-list">
+            <div class="review-item">
+              <div class="review-header">
+                <strong>John Doe</strong>
+                <div class="stars">
+                  <i class="fa-solid fa-star active"></i>
+                  <i class="fa-solid fa-star active"></i>
+                  <i class="fa-solid fa-star active"></i>
+                  <i class="fa-solid fa-star active"></i>
+                  <i class="fa-solid fa-star active"></i>
+                </div>
+              </div>
+              <p class="review-comment">
+                Exceptional quality and pristine finish! Exceeded my expectations. Highly recommended.
+              </p>
+            </div>
+            <div class="review-item">
+              <div class="review-header">
+                <strong>Sara Smith</strong>
+                <div class="stars">
+                  <i class="fa-solid fa-star active"></i>
+                  <i class="fa-solid fa-star active"></i>
+                  <i class="fa-solid fa-star active"></i>
+                  <i class="fa-solid fa-star active"></i>
+                  <i class="fa-solid fa-star"></i>
+                </div>
+              </div>
+              <p class="review-comment">
+                Very premium look and feel. Delivery was quick. Overall satisfied with the purchase.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Tab -->
+        <div *ngIf="activeTab === 'video'" class="tab-pane">
+          <h3>Product Showcase Video</h3>
+          <div class="video-placeholder">
+            <i class="fa-regular fa-circle-play"></i>
+            <p>Video demonstration of {{ product.name }} will load here.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Related Products section -->
+    <div class="related-products-section" *ngIf="relatedProducts.length > 0">
+      <h2 class="related-title">Related Products</h2>
+      
+      <div class="related-grid">
+        <div 
+          *ngFor="let rel of relatedProducts" 
+          class="related-card"
+          [routerLink]="['/product', rel.id]"
+        >
+          <div class="image-box">
+            <img [src]="rel.image" [alt]="rel.name" />
+          </div>
+          <div class="details">
+            <div class="title-row">
+              <h3>{{ rel.name }}</h3>
+              <div class="stars">
+                <i *ngFor="let s of [1,2,3,4,5]" 
+                   class="fa-solid fa-star" 
+                   [class.active]="s <= rel.rating"
+                ></i>
+              </div>
+            </div>
+            <div class="price-row">
+              <span class="price">${{ rel.price | number:'1.2-2' }}</span>
+              <span class="code">Code: {{ rel.code }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<footer id="contact" class="site-footer">
+  <div class="container footer-grid">
+    <!-- Brand Info & Newsletter -->
+    <div class="footer-col brand-col">
+      <a routerLink="/home" class="logo">Hekto</a>
+      <div class="subscribe-form">
+        <input 
+          type="email" 
+          #emailInput
+          placeholder="Enter Email Address" 
+          (keyup.enter)="onSubscribe(emailInput.value); emailInput.value = ''"
+        />
+        <button (click)="onSubscribe(emailInput.value); emailInput.value = ''">Sign Up</button>
+      </div>
+      <p class="address-text">
+        17 Princess Road, London, Greater London<br/>NW1 8JR, UK
+      </p>
+    </div>
+
+    <!-- Categories -->
+    <div class="footer-col links-col">
+      <h3>Categories</h3>
+      <ul>
+        <li><a routerLink="/products" [queryParams]="{category: 'Laptop'}">Laptops & Computers</a></li>
+        <li><a routerLink="/products">Cameras & Photography</a></li>
+        <li><a routerLink="/products">Smart Phones & Tablets</a></li>
+        <li><a routerLink="/products" [queryParams]="{category: 'Game Console'}">Video Games & Consoles</a></li>
+        <li><a routerLink="/products" [queryParams]="{category: 'Headphones'}">Waterproof Headphones</a></li>
+      </ul>
+    </div>
+
+    <!-- Customer Care -->
+    <div class="footer-col links-col">
+      <h3>Customer Care</h3>
+      <ul>
+        <li><a href="javascript:void(0)">My Account</a></li>
+        <li><a href="javascript:void(0)">Discount</a></li>
+        <li><a href="javascript:void(0)">Returns</a></li>
+        <li><a href="javascript:void(0)">Orders History</a></li>
+        <li><a href="javascript:void(0)">Order Tracking</a></li>
+      </ul>
+    </div>
+
+    <!-- Pages -->
+    <div class="footer-col links-col">
+      <h3>Pages</h3>
+      <ul>
+        <li><a routerLink="/home" fragment="blog">Blog</a></li>
+        <li><a routerLink="/products">Browse the Shop</a></li>
+        <li><a routerLink="/products">Category</a></li>
+        <li><a routerLink="/products">Pre-Built Pages</a></li>
+        <li><a routerLink="/products">Visual Composer Elements</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- Bottom Bar -->
+<div class="bottom-bar">
+  <div class="container bottom-bar-content">
+    <p class="copyright">&copy;Webecy - All Rights Reserved</p>
+    <div class="social-links">
+      <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+        <i class="fa-brands fa-twitter"></i>
+      </a>
+      <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+    </div>
+  </div>
+</div>

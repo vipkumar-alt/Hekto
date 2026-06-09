@@ -1,0 +1,319 @@
+<!-- Hero Section / Banner Slider -->
+<section class="hero-slider">
+  <!-- Lamp Graphic Decoration (CSS-built) -->
+  <div class="lamp-container">
+    <div class="lamp-hook"></div>
+    <div class="lamp-wire"></div>
+    <div class="lamp-shade"></div>
+    <div class="lamp-glow"></div>
+  </div>
+
+  <div class="container hero-content-grid">
+    <div class="hero-text-col">
+      <span class="hero-tagline">Best Headphone For Your Life...</span>
+      <h1 class="hero-title">New Trendy Collection<br/>Headphones</h1>
+      <p class="hero-desc">
+        Experience premium, immersive studio audio quality with active noise cancellation and ergonomic cushion design.
+      </p>
+      <a routerLink="/products" class="btn btn-primary hero-btn">Shop Now</a>
+    </div>
+
+    <div class="hero-image-col">
+      <div class="image-circle-bg">
+        <img src="/assets/products/headphones-detail.jpg" alt="New Trendy Headphones" />
+        <!-- Floating 50% Off Badge -->
+        <div class="discount-badge-circle">
+          <span>50%<br/>Off</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Carousel Dots -->
+  <!-- <div class="carousel-dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div> -->
+</section>
+
+<!-- Featured Products Section -->
+<section class="featured-section section-padding">
+  <div class="container">
+    <h2 class="section-title text-center">Featured Products</h2>
+
+    <div class="products-grid featured-grid">
+      <div class="product-card featured-card" *ngFor="let product of featuredProducts" [routerLink]="['/product', product.id]">
+        <div class="card-image-wrapper">
+          <img [src]="product.image" [alt]="product.name" />
+          <div class="hover-actions-overlay">
+            <button class="action-btn" (click)="addToCart(product, $event)" title="Add to Cart">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+            <button class="action-btn" title="Add to Wishlist" (click)="addToWishlist(product, $event)">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="action-btn" title="View Details">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </button>
+          </div>
+          <button class="view-details-btn">View Details</button>
+        </div>
+        <div class="card-details">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <div class="color-markers">
+            <span class="marker green"></span>
+            <span class="marker pink"></span>
+            <span class="marker blue"></span>
+          </div>
+          <p class="product-code">Code - {{ product.code }}</p>
+          <p class="product-price">${{ product.price | number:'1.2-2' }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Dots -->
+    <!-- <div class="section-dots text-center">
+      <span class="bar-dot active"></span>
+      <span class="bar-dot"></span>
+      <span class="bar-dot"></span>
+    </div>-->
+  </div>
+</section>
+
+<!-- Latest Products Section -->
+<section class="latest-section section-padding">
+  <div class="container">
+    <h2 class="section-title text-center">Leatest Products</h2>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-nav text-center">
+      <button
+        [class.active]="activeLatestTab === 'New Arrival'"
+        (click)="loadLatestProducts('New Arrival')"
+      >
+        New Arrival
+      </button>
+      <button
+        [class.active]="activeLatestTab === 'Best Seller'"
+        (click)="loadLatestProducts('Best Seller')"
+      >
+        Best Seller
+      </button>
+      <button
+        [class.active]="activeLatestTab === 'Featured'"
+        (click)="loadLatestProducts('Featured')"
+      >
+        Featured
+      </button>
+      <button
+        [class.active]="activeLatestTab === 'Special Offer'"
+        (click)="loadLatestProducts('Special Offer')"
+      >
+        Special Offer
+      </button>
+    </div>
+
+    <div class="products-grid latest-grid">
+      <div class="product-card latest-card" *ngFor="let product of latestProducts" [routerLink]="['/product', product.id]">
+        <div class="card-image-wrapper">
+          <span class="sale-badge" *ngIf="product.discountType">Sale</span>
+          <img [src]="product.image" [alt]="product.name" />
+          <div class="side-actions-overlay">
+            <button class="action-btn" (click)="addToCart(product, $event)" title="Add to Cart">
+              <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+            <button class="action-btn" title="Add to Wishlist" (click)="addToWishlist(product, $event)">
+              <i class="fa-regular fa-heart"></i>
+            </button>
+            <button class="action-btn" title="View Details">
+              <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-details">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <div class="price-row">
+            <span class="current-price">${{ product.price | number:'1.2-2' }}</span>
+            <span class="original-price" *ngIf="product.originalPrice">${{ product.originalPrice | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Unique Features Section -->
+<section class="promo-banner-section">
+  <div class="container promo-banner-grid">
+    <div class="promo-image-col">
+      <div class="sofa-circle-bg">
+        <img [src]="sofaProduct.image" [alt]="sofaProduct.name" />
+      </div>
+    </div>
+
+    <div class="promo-text-col">
+      <h2 class="promo-title">Unique Features Of Leatest &<br/>Trending Products</h2>
+      <ul class="promo-features-list">
+        <li>
+          <span class="list-bullet pink"></span>
+          <span>All frames constructed with hardwood solids and laminates</span>
+        </li>
+        <li>
+          <span class="list-bullet blue"></span>
+          <span>Double-doweled, mortise & tenon joints for strength and durability</span>
+        </li>
+        <li>
+          <span class="list-bullet green"></span>
+          <span>Arms, backs and seats are structurally reinforced</span>
+        </li>
+      </ul>
+
+      <div class="action-row">
+        <button class="btn btn-primary add-to-cart-btn" (click)="addToCart(sofaProduct)">Add To Cart</button>
+        <div class="sofa-label-info">
+          <span class="label-name">{{ sofaProduct.name }}</span>
+          <span class="label-price">${{ sofaProduct.price | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Trending Products Section -->
+<section class="trending-section section-padding">
+  <div class="container">
+    <h2 class="section-title text-center">Trending Products</h2>
+
+    <div class="products-grid trending-grid">
+      <div class="product-card trending-card" *ngFor="let product of trendingProducts" [routerLink]="['/product', product.id]">
+        <div class="card-image-wrapper">
+          <img [src]="product.image" [alt]="product.name" />
+        </div>
+        <div class="card-details">
+          <h3 class="product-name">{{ product.name }}</h3>
+          <div class="price-row">
+            <span class="current-price">${{ product.price | number:'1.2-2' }}</span>
+            <span class="original-price" *ngIf="product.originalPrice">${{ product.originalPrice | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Discount Item Section -->
+<section class="discount-section section-padding">
+  <div class="container">
+    <h2 class="section-title text-center">Discount Item</h2>
+
+    <!-- Tabs Navigation -->
+    <div class="tabs-nav text-center">
+      <button
+        [class.active]="activeDiscountTab === 'Headphones'"
+        (click)="loadDiscountProduct('Headphones')"
+      >
+        Headphones
+      </button>
+      <button
+        [class.active]="activeDiscountTab === 'Laptop'"
+        (click)="loadDiscountProduct('Laptop')"
+      >
+        Laptop
+      </button>
+      <button
+        [class.active]="activeDiscountTab === 'Perfume'"
+        (click)="loadDiscountProduct('Perfume')"
+      >
+        Other
+      </button>
+    </div>
+
+    <div class="discount-grid" *ngIf="discountProduct">
+      <div class="discount-text-col">
+        <h3 class="discount-percent">20% Discount Of All Products</h3>
+        <h4 class="discount-subtitle">{{ discountProduct.name }} Compact</h4>
+        <p class="discount-desc">
+          High-performance ergonomics built for premium comfort and daily reliability. Styled with modern color tones.
+        </p>
+        <ul class="discount-bullets">
+          <li><i class="fa-solid fa-check"></i> Material alique dolorum</li>
+          <li><i class="fa-solid fa-check"></i> Clear lines and premium layers</li>
+          <li><i class="fa-solid fa-check"></i> Simple neutral colors</li>
+          <li><i class="fa-solid fa-check"></i> Beautiful design elements</li>
+        </ul>
+        <button class="btn btn-primary discount-btn" (click)="addToCart(discountProduct)">Shop Now</button>
+      </div>
+
+      <div class="discount-image-col">
+        <div class="discount-image-circle-bg">
+          <img [src]="discountProduct.image" [alt]="discountProduct.name" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Top Categories Section -->
+<section class="categories-section section-padding">
+  <div class="container">
+    <h2 class="section-title text-center">Top Categories</h2>
+
+    <div class="categories-grid">
+      <div class="category-card" *ngFor="let product of topCategories" [routerLink]="['/product', product.id]">
+        <div class="circle-image-wrapper">
+          <img [src]="product.image" [alt]="product.name" />
+          <button class="view-category-btn">View Category</button>
+        </div>
+        <h3 class="category-name">{{ product.name }}</h3>
+        <p class="category-price">${{ product.price | number:'1.2-2' }}</p>
+      </div>
+    </div>
+
+    <!-- Carousel Dots -->
+    <div class="carousel-dots text-center margin-top">
+      <span class="dot active"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter Subscribe Section -->
+<section class="newsletter-subscribe-section">
+  <div class="newsletter-overlay"></div>
+  <div class="container newsletter-content text-center">
+    <h2>Get Latest Update By Subscribe<br/>Our Newsletter</h2>
+    <a routerLink="/products" class="btn btn-primary subscribe-banner-btn">Subscribe</a>
+  </div>
+</section>
+
+<!-- Latest Blog Section -->
+<section id="blog" class="blog-section section-padding">
+  <div class="container">
+    <h2 class="section-title text-center">Leatest Blog</h2>
+
+    <div class="blog-grid">
+      <article class="blog-card" *ngFor="let blog of blogs">
+        <div class="blog-image">
+          <img [src]="blog.image" [alt]="blog.title" />
+        </div>
+        <div class="blog-content">
+          <div class="blog-meta">
+            <span>
+              <i class="fa-solid fa-pencil"></i>
+              {{ blog.author }}
+            </span>
+            <span>
+              <i class="fa-regular fa-calendar-days"></i>
+              {{ blog.date }}
+            </span>
+          </div>
+          <h3 class="blog-title"><a href="javascript:void(0)">{{ blog.title }}</a></h3>
+          <p class="blog-excerpt">{{ blog.excerpt }}</p>
+          <a href="javascript:void(0)" class="read-more-link">Read More</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

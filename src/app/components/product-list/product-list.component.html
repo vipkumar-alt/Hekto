@@ -1,0 +1,259 @@
+<!-- Page Header Banner -->
+<header class="page-header-banner">
+  <div class="container">
+    <h1>Products</h1>
+    <div class="breadcrumbs">
+      <a routerLink="/home">Home</a> . <span>Pages</span> . <span class="active">Products</span>
+    </div>
+  </div>
+</header>
+
+<!-- Filter and Sort Bar Toolbar -->
+<div class="filter-toolbar-section">
+  <div class="container toolbar-content">
+    <div class="toolbar-left">
+      <h2>Ecommerce Items & Accessories</h2>
+      <p class="results-count">About {{ filteredProducts.length }} results (Page {{ currentPage }} of {{ totalPages }})</p>
+    </div>
+    
+    <div class="toolbar-right">
+      <!-- Per Page Selector (Mock) -->
+      <div class="toolbar-item">
+        <label for="perPage">Per Page:</label>
+        <select id="perPage" class="toolbar-select" (change)="onPerPageChange($event)" [value]="perPage">
+          <option *ngFor="let option of pageOptions" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+
+      <!-- Sort By Selector -->
+      <div class="toolbar-item">
+        <label for="sortBy">Sort By:</label>
+        <select id="sortBy" class="toolbar-select" (change)="onSortChange($event)" [value]="sortBy">
+          <option value="price-low-high">Price: Low to High</option>
+          <option value="price-high-low">Price: High to Low</option>
+          <option value="rating">Rating</option>
+        </select>
+      </div>
+
+      <!-- View Mode Toggle -->
+      <div class="toolbar-item view-toggles">
+        <label>View:</label>
+        <button 
+          class="view-btn" 
+          [class.active]="viewMode === 'grid'"
+          (click)="toggleViewMode('grid')"
+          title="Grid View"
+        >
+          <i class="fa-solid fa-table-cells-large"></i>
+        </button>
+        <button 
+          class="view-btn" 
+          [class.active]="viewMode === 'list'"
+          (click)="toggleViewMode('list')"
+          title="List View"
+        >
+          <i class="fa-solid fa-list"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Catalog Layout -->
+<div class="catalog-section">
+  <div class="container catalog-grid">
+    
+    <!-- Left Sidebar Filters -->
+    <aside class="filter-sidebar">
+      
+      <!-- Brand Filter -->
+      <div class="filter-group">
+        <h3>Product Brand</h3>
+        <div class="filter-checkbox-list">
+          <label *ngFor="let brand of brands" class="checkbox-label">
+            <input 
+              type="checkbox" 
+              (change)="toggleBrand(brand, $event)"
+              [checked]="selectedBrands.includes(brand)"
+            />
+            <span class="custom-checkbox"></span>
+            <span class="label-text">{{ brand }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Discount Filter -->
+      <div class="filter-group">
+        <h3>Discount Offer</h3>
+        <div class="filter-checkbox-list">
+          <label *ngFor="let discount of discounts" class="checkbox-label">
+            <input 
+              type="checkbox" 
+              (change)="toggleDiscount(discount, $event)"
+              [checked]="selectedDiscounts.includes(discount)"
+            />
+            <span class="custom-checkbox pink"></span>
+            <span class="label-text">{{ discount }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Rating Filter -->
+      <div class="filter-group">
+        <h3>Rating</h3>
+        <div class="filter-ratings-list">
+          <div 
+            *ngFor="let rate of [5, 4, 3, 2, 1]" 
+            class="rating-filter-row" 
+            [class.active]="selectedRating === rate"
+            (click)="setRating(rate)"
+          >
+            <span class="rating-checkbox" [class.checked]="selectedRating === rate"></span>
+            <div class="stars">
+              <i *ngFor="let star of [1, 2, 3, 4, 5]" 
+                 class="fa-solid fa-star" 
+                 [class.active]="star <= rate"
+              ></i>
+            </div>
+            <span class="rating-text" *ngIf="rate < 5">& Up</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Filter -->
+      <div class="filter-group">
+        <h3>Categories</h3>
+        <div class="filter-checkbox-list">
+          <label *ngFor="let cat of categories" class="checkbox-label">
+            <input 
+              type="checkbox" 
+              (change)="toggleCategory(cat, $event)"
+              [checked]="selectedCategories.includes(cat)"
+            />
+            <span class="custom-checkbox violet"></span>
+            <span class="label-text">{{ cat }}</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Price Range Filter -->
+      <div class="filter-group">
+        <h3>Price</h3>
+        <div class="filter-checkbox-list">
+          <label *ngFor="let pr of prices" class="checkbox-label">
+            <input 
+              type="checkbox" 
+              (change)="togglePriceRange(pr.min, pr.max, $event)"
+            />
+            <span class="custom-checkbox"></span>
+            <span class="label-text">{{ pr.label }}</span>
+          </label>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Right Products Catalog -->
+    <main class="products-display-area">
+      
+      <!-- Loading Skeleton (Preloader matching Preloader.png) -->
+      <div *ngIf="loading" class="preloader-container" [class.list-layout]="viewMode === 'list'" [class.grid-layout]="viewMode === 'grid'">
+        <div *ngFor="let skeleton of [1,2,3,4,5,6]" class="skeleton-card">
+          <div class="skeleton-image shimmer-block"></div>
+          <div class="skeleton-info">
+            <div class="skeleton-line title shimmer-block"></div>
+            <div class="skeleton-line meta shimmer-block"></div>
+            <div class="skeleton-line price shimmer-block"></div>
+            <div class="skeleton-line desc shimmer-block" *ngIf="viewMode === 'list'"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Loaded Products List -->
+      <div *ngIf="!loading" [class.list-view-container]="viewMode === 'list'" [class.grid-view-container]="viewMode === 'grid'">
+        
+        <!-- Empty Results Page -->
+        <div *ngIf="products.length === 0" class="no-results text-center">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <h3>No items match your filters</h3>
+          <p>Try resetting some checklist options or searching for a different term.</p>
+        </div>
+
+        <!-- Product Cards -->
+        <div 
+          *ngFor="let product of products" 
+          [class.list-product-card]="viewMode === 'list'" 
+          [class.grid-product-card]="viewMode === 'grid'"
+          [routerLink]="['/product', product.id]"
+        >
+          <!-- Product Image -->
+          <div class="product-image-box">
+            <img [src]="product.image" [alt]="product.name" />
+          </div>
+
+          <!-- Product Details -->
+          <div class="product-details-box">
+            <div class="title-row">
+              <h3 class="product-name">{{ product.name }}</h3>
+              
+              <!-- Color dots (for grid view styling) -->
+              <div class="color-markers" *ngIf="viewMode === 'grid'">
+                <span class="marker green"></span>
+                <span class="marker pink"></span>
+                <span class="marker blue"></span>
+              </div>
+            </div>
+
+            <!-- Price & Rating Stars -->
+            <div class="info-row">
+              <div class="price-box">
+                <span class="discount-price">${{ product.price | number:'1.2-2' }}</span>
+                <span class="original-price" *ngIf="product.originalPrice">${{ product.originalPrice | number:'1.2-2' }}</span>
+              </div>
+
+              <!-- Rating Stars -->
+              <div class="stars">
+                <i *ngFor="let star of [1,2,3,4,5]" 
+                   class="fa-solid fa-star" 
+                   [class.active]="star <= product.rating"
+                ></i>
+              </div>
+            </div>
+
+            <!-- Description (List View only) -->
+            <p class="product-desc" *ngIf="viewMode === 'list'">
+              {{ product.description }}
+            </p>
+
+            <!-- Card Actions footer (cart, wishlist, details) -->
+            <div class="card-actions">
+              <button class="action-btn" (click)="addToCart(product, $event)" title="Add to Cart">
+                <i class="fa-solid fa-cart-shopping"></i>
+              </button>
+              <button class="action-btn" title="Add to Wishlist" (click)="addToWishlist(product, $event)">
+                <i class="fa-regular fa-heart"></i>
+              </button>
+              <button class="action-btn" title="View Details">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-container" *ngIf="!loading && products.length > 0">
+        <button
+          *ngFor="let page of paginationPages"
+          class="page-num" 
+          [class.active]="currentPage === page"
+          (click)="changePage(page)"
+        >{{ page }}</button>
+      </div>
+
+    </main>
+
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="container top-bar-content">
+    <div class="contact-info">
+      <span>
+        <i class="fa-regular fa-envelope"></i>
+        <a href="mailto:mhhasanul@gmail.com">mhhasanul&#64;gmail.com</a>
+      </span>
+      <span>
+        <i class="fa-solid fa-phone-volume"></i>
+        <a href="tel:1234567890">(12345)67890</a>
+      </span>
+    </div>
+    <div class="user-menu">
+      <div class="dropdown">
+        <span>English <i class="fa-solid fa-chevron-down"></i></span>
+      </div>
+      <div class="dropdown">
+        <span>USD <i class="fa-solid fa-chevron-down"></i></span>
+      </div>
+      <a href="javascript:void(0)" class="menu-link">
+        Login <i class="fa-regular fa-user"></i>
+      </a>
+      <a href="javascript:void(0)" class="menu-link">
+        Wishlist <i class="fa-regular fa-heart"></i>
+        <span class="wishlist-badge" *ngIf="wishlistCount > 0">{{ wishlistCount }}</span>
+      </a>
+      <a routerLink="/cart" class="cart-icon-wrapper menu-link">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="cart-badge" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Main Navbar -->
+<nav class="main-navbar">
+  <div class="container navbar-content">
+    <div class="nav-brand">
+      <a routerLink="/home" class="logo">Hekto</a>
+    </div>
+    
+    <div class="nav-links">
+      <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a routerLink="/products" routerLinkActive="active">Products</a>
+      <a routerLink="/home" fragment="blog">Blog</a>
+      <a routerLink="/home" fragment="contact">Contact</a>
+    </div>
+
+    <div class="nav-search">
+      <input 
+        type="text" 
+        #searchInput
+        placeholder="Search product..." 
+        (keyup.enter)="onSearch(searchInput.value)"
+      />
+      <button (click)="onSearch(searchInput.value)">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
+  </div>
+</nav>

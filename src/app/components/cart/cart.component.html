@@ -1,0 +1,152 @@
+<!-- Page Header Banner -->
+<header class="page-header-banner">
+  <div class="container">
+    <h1>Shopping Cart</h1>
+    <div class="breadcrumbs">
+      <a routerLink="/home">Home</a> . <span>Pages</span> . <span class="active">Shopping Cart</span>
+    </div>
+  </div>
+</header>
+
+<!-- Main Cart Page Content -->
+<div class="cart-page-section section-padding">
+  <div class="container">
+    
+    <!-- Populated Cart Layout -->
+    <div *ngIf="cartItems.length > 0" class="cart-layout-grid">
+      
+      <!-- Left side: Items Table -->
+      <div class="cart-items-wrapper">
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cartItems">
+              <!-- Product Image and Details -->
+              <td>
+                <div class="cart-product-cell">
+                  <div class="cart-img-box">
+                    <img [src]="item.product.image" [alt]="item.product.name" />
+                    <!-- Remove Button overlay -->
+                    <button class="remove-btn" (click)="removeItem(item.product.id)" title="Remove Item">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
+                  <div class="cart-product-info">
+                    <h4>{{ item.product.name }}</h4>
+                    <p class="meta-tag">Code: {{ item.product.code }}</p>
+                    <p class="meta-tag">Brand: {{ item.product.brand }}</p>
+                  </div>
+                </div>
+              </td>
+              <!-- Product Unit Price -->
+              <td class="unit-price-cell">
+                ${{ item.product.price | number:'1.2-2' }}
+              </td>
+              <!-- Quantity Selector -->
+              <td>
+                <div class="quantity-selector">
+                  <button class="qty-btn" (click)="decrementQuantity(item.product.id, item.quantity)">-</button>
+                  <span class="qty-val">{{ item.quantity }}</span>
+                  <button class="qty-btn" (click)="incrementQuantity(item.product.id, item.quantity)">+</button>
+                </div>
+              </td>
+              <!-- Item Total Price -->
+              <td class="item-total-cell">
+                ${{ (item.product.price * item.quantity) | number:'1.2-2' }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Table Actions -->
+        <div class="table-actions-row">
+          <a routerLink="/products" class="btn btn-secondary continue-shopping-btn">Continue Shopping</a>
+          <button class="btn btn-outline clear-cart-btn" (click)="clearCart()">Clear Cart</button>
+        </div>
+      </div>
+
+      <!-- Right side: Cart Totals Box -->
+      <div class="cart-summary-wrapper">
+        <div class="summary-card">
+          <h3>Cart Totals</h3>
+          
+          <div class="summary-row">
+            <span class="row-label">Subtotal:</span>
+            <span class="row-value">${{ subtotal | number:'1.2-2' }}</span>
+          </div>
+          
+          <div class="summary-row">
+            <span class="row-label">Shipping:</span>
+            <span class="row-value">${{ shipping | number:'1.2-2' }}</span>
+          </div>
+
+          <div class="summary-row total-row">
+            <span class="row-label">Total:</span>
+            <span class="row-value">${{ total | number:'1.2-2' }}</span>
+          </div>
+
+          <button class="btn btn-primary checkout-btn" (click)="openCheckoutModal()">Proceed to checkout</button>
+          
+          <button class="clear-cart-link" (click)="clearCart()">Clear cart</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Empty Cart Layout (Matches CartEmpty.png) -->
+    <div *ngIf="cartItems.length === 0" class="empty-cart-view text-center">
+      <!-- Custom CSS-drawn empty cart container -->
+      <div class="empty-basket-graphic">
+        <div class="basket-handle left"></div>
+        <div class="basket-handle right"></div>
+        <div class="basket-body">
+          <i class="fa-solid fa-cart-shopping basket-icon"></i>
+          <span class="sad-face">:(</span>
+        </div>
+      </div>
+      
+      <h2>Your Cart Is Empty</h2>
+      <a routerLink="/products" class="btn btn-primary start-shopping-btn">Start Shopping</a>
+    </div>
+
+  </div>
+</div>
+
+<!-- Checkout Confirmation Modal -->
+<div class="modal-overlay" *ngIf="showCheckoutModal">
+  <div class="modal-content">
+    <h2>Order Confirmation</h2>
+    <p class="modal-desc">Review your checkout details before finalizing the transaction.</p>
+    
+    <div class="modal-summary-box">
+      <div class="summary-item">
+        <span>Total Items:</span>
+        <strong>{{ cartItems.length }} type(s)</strong>
+      </div>
+      <div class="summary-item">
+        <span>Subtotal:</span>
+        <strong>${{ subtotal | number:'1.2-2' }}</strong>
+      </div>
+      <div class="summary-item">
+        <span>Flat Shipping:</span>
+        <strong>${{ shipping | number:'1.2-2' }}</strong>
+      </div>
+      <div class="summary-item total">
+        <span>Amount to Pay:</span>
+        <strong>${{ total | number:'1.2-2' }}</strong>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="closeCheckoutModal()">Cancel</button>
+      <button class="btn btn-primary" (click)="confirmCheckout()">Confirm Order</button>
+    </div>
+  </div>
+</div>

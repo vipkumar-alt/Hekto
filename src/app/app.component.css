@@ -1,0 +1,23 @@
+.app-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 10000;
+  max-width: min(360px, calc(100vw - 48px));
+  padding: 14px 18px;
+  border-radius: 6px;
+  background: var(--color-secondary);
+  color: #ffffff;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-headings);
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+@media (max-width: 576px) {
+  .app-toast {
+    right: 16px;
+    bottom: 16px;
+    max-width: calc(100vw - 32px);
+  }
+}
