@@ -60,5 +60,17 @@ For more information on using the Angular CLI, including detailed command refere
 
 ##UI Preview
 
+<img width="1512" height="741" alt="Screenshot 2026-06-12 at 11 18 33 AM" src="https://github.com/user-attachments/assets/d0b2e716-f57b-452f-804c-f65eb283b63e" />
+
+<img width="1511" height="636" alt="Screenshot 2026-06-12 at 11 19 21 AM" src="https://github.com/user-attachments/assets/38a85092-ca09-44f8-a97b-3e8350930be3" />
+
+<img width="1507" height="633" alt="Screenshot 2026-06-12 at 11 19 31 AM" src="https://github.com/user-attachments/assets/dfe5526d-af44-4e93-a884-7ad5dff2d2b2" />
+
+<img width="1510" height="530" alt="Screenshot 2026-06-12 at 11 19 59 AM" src="https://github.com/user-attachments/assets/fb8df3c9-03f9-4a8e-9e70-e00559e4d5b3" />
+
+<img width="1512" height="591" alt="Screenshot 2026-06-12 at 11 20 17 AM" src="https://github.com/user-attachments/assets/3b9a3fc4-36c9-4349-9903-620214a407d4" />
+
+<img width="1512" height="689" alt="Screenshot 2026-06-12 at 11 20 33 AM" src="https://github.com/user-attachments/assets/9a483146-0223-482d-a2e2-c4419a89fd38" />
+
 <img width="1348" height="817" alt="Screenshot 2026-06-12 at 11 20 48 AM" src="https://github.com/user-attachments/assets/34020c68-f7ca-4172-966b-5d1cdcb785a1" />
 
