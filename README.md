@@ -1,5 +1,7 @@
 # HektoApp
+## Project Overview
 
+Hekto is an e-commerce web application built using the Angular framework. The project structure includes components for core e-commerce features such as a homepage, product lists, product detail pages, and a shopping cart. It also has services to manage product data and cart functionality.
 
 
 ## Development server
